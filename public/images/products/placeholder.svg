@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ede9fe"/>
+      <stop offset="1" stop-color="#e0e7ff"/>
+    </linearGradient>
+    <linearGradient id="icon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6d28d9"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <rect x="40" y="40" width="520" height="520" rx="32" fill="none" stroke="#c7d2fe" stroke-width="4" stroke-dasharray="18 14"/>
+  <circle cx="300" cy="270" r="96" fill="url(#icon)" opacity="0.12"/>
+  <g transform="translate(300 270)">
+    <rect x="-58" y="-44" width="116" height="88" rx="18" fill="#6d28d9" opacity="0.92"/>
+    <rect x="-34" y="-26" width="68" height="52" rx="14" fill="none" stroke="#ffffff" stroke-width="7"/>
+    <rect x="-58" y="-28" width="34" height="34" rx="10" fill="#ffffff" opacity="0.9"/>
+    <circle r="18" fill="none" stroke="#ffffff" stroke-width="7"/>
+  </g>
+  <text x="300" y="455" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="bold" fill="#6d28d9" text-anchor="middle" letter-spacing="0.5">Photo coming soon</text>
+  <text x="300" y="492" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#8b8db2" text-anchor="middle">Add your image in public/images/products</text>
+</svg>

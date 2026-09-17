@@ -1,0 +1,37 @@
+DROP YOUR PRODUCT PHOTOS IN THIS FOLDER
+=========================================
+
+Save each photo as .jpg using EXACTLY these filenames (main = product name,
+then -1, -2, -3 for extra gallery angles).
+
+e.g. put "wireless-headphones.jpg" here, and the site shows it for that product.
+Any missing image automatically falls back to placeholder.svg.
+
+1.  wireless-headphones.jpg / -1 / -2 / -3
+2.  classic-denim-jacket.jpg / -1 / -2 / -3
+3.  smart-watch-series.jpg / -1 / -2 / -3
+4.  minimalist-leather-wallet.jpg / -1 / -2 / -3
+5.  ceramic-mug-set.jpg / -1 / -2 / -3
+6.  running-shoes-proflex.jpg / -1 / -2 / -3
+7.  mechanical-keyboard.jpg / -1 / -2 / -3
+8.  cozy-throw-blanket.jpg / -1 / -2 / -3
+9.  wireless-earbuds.jpg / -1 / -2 / -3
+10. canvas-weekend-backpack.jpg / -1 / -2 / -3
+11. linen-throw-pillows.jpg / -1 / -2 / -3
+12. classic-cotton-tshirt.jpg / -1 / -2 / -3
+13. art-of-coding.jpg / -1 / -2
+14. yoga-mat-premium.jpg / -1 / -2 / -3
+15. steel-water-bottle.jpg / -1 / -2 / -3
+16. trail-running-backpack.jpg / -1 / -2
+17. 4k-action-camera.jpg / -1 / -2 / -3
+18. smart-led-strip.jpg / -1 / -2
+19. bluetooth-speaker.jpg / -1 / -2 / -3
+20. floral-summer-dress.jpg / -1 / -2 / -3
+21. casual-sneakers.jpg / -1 / -2
+22. silk-scarf.jpg / -1 / -2
+23. bamboo-utensils.jpg / -1 / -2
+24. scented-candle-trio.jpg / -1 / -2
+25. leather-belt.jpg / -1 / -2
+26. polarized-sunglasses.jpg / -1 / -2
+27. silent-ocean-novel.jpg / -1 / -2
+28. resistance-bands.jpg / -1 / -2 / -3
