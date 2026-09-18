@@ -4,9 +4,10 @@ import { ThemeContext } from '../../context/ThemeContext';
 import { useProducts } from '../../context/ProductContext';
 import { categories } from '../../data/products';
 import SafeImage from '../../component/common/SafeImage';
-import { FaArrowLeft, FaUpload, FaDownload } from 'react-icons/fa6';
+import { uploadImage } from '../../utils/cloudinary';
+import { FaArrowLeft, FaUpload, FaSpinner } from 'react-icons/fa6';
 
-const MAX_UPLOAD_BYTES = 1000 * 1000;
+const MAX_UPLOAD_BYTES = 10 * 1000 * 1000;
 
 const AdminProductForm = () => {
   const { id } = useParams();
@@ -29,11 +30,11 @@ const AdminProductForm = () => {
     description: '',
     features: '',
     image: '',
-    gallery: '',
     featured: true,
   });
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (existing) {
@@ -48,7 +49,6 @@ const AdminProductForm = () => {
         description: existing.description || '',
         features: (existing.features || []).join('\n'),
         image: existing.image || '',
-        gallery: (existing.gallery || []).join('\n'),
         featured: Boolean(existing.featured),
       });
     }
@@ -75,19 +75,24 @@ const AdminProductForm = () => {
     setApiError('');
   };
 
-  const handleUpload = (e) => {
+  const handleUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.size > MAX_UPLOAD_BYTES) {
-      setApiError('Image is too large: maximum 1 MB for local storage. Try a smaller file or paste a URL instead.');
+      setApiError('Image is too large: maximum 10 MB. Try a smaller file or paste a URL instead.');
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setForm((prev) => ({ ...prev, image: reader.result }));
-      setApiError('');
-    };
-    reader.readAsDataURL(file);
+    setUploading(true);
+    setApiError('');
+    try {
+      const url = await uploadImage(file);
+      setForm((prev) => ({ ...prev, image: url }));
+    } catch (err) {
+      setApiError(err.message || 'Failed to upload image to Cloudinary.');
+    } finally {
+      setUploading(false);
+    }
+    e.target.value = '';
   };
 
   const validate = () => {
@@ -122,10 +127,6 @@ const AdminProductForm = () => {
       .split('\n')
       .map((s) => s.trim())
       .filter(Boolean);
-    const gallery = form.gallery
-      .split('\n')
-      .map((s) => s.trim())
-      .filter(Boolean);
     const payload = {
       name: form.name.trim(),
       brand: form.brand.trim(),
@@ -137,7 +138,7 @@ const AdminProductForm = () => {
       description: form.description.trim(),
       features,
       image,
-      gallery: gallery.length ? gallery : [image],
+      gallery: [image],
       featured: form.featured,
     };
 
@@ -380,13 +381,15 @@ const AdminProductForm = () => {
                   <label
                     htmlFor="imageUpload"
                     className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border text-sm font-semibold cursor-pointer transition-colors ${
+                      uploading ? 'opacity-60 pointer-events-none' : ''
+                    } ${
                       isDark
                         ? 'border-gray-600 hover:bg-gray-700'
                         : 'border-gray-300 hover:bg-gray-100'
                     }`}
                   >
-                    <FaUpload />
-                    Upload from computer
+                    {uploading ? <FaSpinner className="animate-spin" /> : <FaUpload />}
+                    {uploading ? 'Uploading…' : 'Upload from computer'}
                   </label>
                   <input
                     id="imageUpload"
@@ -396,31 +399,11 @@ const AdminProductForm = () => {
                     className="hidden"
                   />
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
-                    Max 1 MB (image is saved locally in your browser). Files you add to
-                    public/images/products in jpg, png or webp also work automatically.
+                    Max 10 MB per file. Images are uploaded to Cloudinary and served from its CDN.
                   </p>
                 </div>
               </div>
               {errors.image && <p className="text-xs text-danger mt-1">{errors.image}</p>}
-            </div>
-
-            <div className="space-y-1.5">
-              <label htmlFor="gallery" className="block text-sm font-medium">
-                Gallery Images (optional, one per line)
-              </label>
-              <textarea
-                id="gallery"
-                name="gallery"
-                rows="3"
-                value={form.gallery}
-                onChange={handleChange}
-                placeholder="/images/products/headphones-1.jpg"
-                className={`${inputClass} resize-none`}
-              />
-              <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
-                <FaDownload />
-                If left empty, the main image is used for all gallery slots.
-              </p>
             </div>
           </div>
         </div>
